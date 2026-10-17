@@ -1,24 +1,30 @@
-import { bootstrap } from '../src/app';
+import { log } from '@/log';
+import { bootstrap } from '@/app';
 
-/* eslint-disable no-console */
 if (process.argv.length < 3) {
 	throw new Error('Usage: npm run script -- my-script');
 }
 
-console.log('Running script', process.argv[2]);
-/* eslint-disable-next-line @typescript-eslint/no-var-requires */
-const run = require('./' + process.argv[2]);
+log.info('Running script', process.argv[2]);
 
-if (run.bootstrap) {
-	bootstrap(run.default);
-}
-else {
-	run.default()
-		.then(() => {
-			process.exit(0);
-		})
-		.catch((err: string | Error) => {
-			console.error(err);
-			process.exit(1);
-		});
-}
+import('./' + process.argv[2])
+	.then((run) => {
+		if (run.bootstrap) {
+			bootstrap(run.default);
+		}
+		else {
+			run
+				.default()
+				.then(() => {
+					process.exit(0);
+				})
+				.catch((err: string | Error) => {
+					log.error(err);
+					process.exit(1);
+				});
+		}
+	})
+	.catch((err: string | Error) => {
+		log.error('Error loading script:', err);
+		process.exit(1);
+	});

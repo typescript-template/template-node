@@ -1,12 +1,14 @@
 import { log } from './log';
 
+// {{ remrg:task Start-up and tear-down services for your app }}
+
 /**
  * Initialize & register your app's services here
  */
 export async function register(): Promise<void> {
 	log.info('Booting...');
 
-	// TODO: Register services here
+	// Register services here
 }
 
 /**
@@ -15,5 +17,5 @@ export async function register(): Promise<void> {
 export async function teardown(): Promise<void> {
 	log.info('Tearing down...');
 
-	// TODO: Teardown services here
+	// Teardown services here
 }

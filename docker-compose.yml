@@ -3,6 +3,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: {{project-name}}
+    container_name: {{ remrg:var project-name }}
     environment:
       NODE_ENV: production
